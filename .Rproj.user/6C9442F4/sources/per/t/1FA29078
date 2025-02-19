@@ -1,0 +1,27 @@
+{
+    "id": "1FA29078",
+    "path": "~/[1] UTP MATERIALS/[4] SEMESTER 4 JAN 2025/[4] DATA SCIENCE/titanic/titanic analysis 2/titanic analysis 2/avg amount all values but those who survived and those who died.R",
+    "project_path": "avg amount all values but those who survived and those who died.R",
+    "type": "r_source",
+    "hash": "4277355883",
+    "contents": "",
+    "dirty": false,
+    "created": 1739961924009.0,
+    "source_on_save": false,
+    "relative_order": 6,
+    "properties": {
+        "tempName": "Untitled1",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "74,0",
+        "scrollLine": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1739962012,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1739962012889,
+    "read_only": false,
+    "read_only_alternatives": []
+}

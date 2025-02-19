@@ -1,0 +1,63 @@
+# ============================================
+# Titanic Dataset: Plot Independent Variables vs. Survived (with Value Ranges)
+# ============================================
+
+# Install required packages if not already installed
+if (!require(ggplot2)) install.packages("ggplot2")
+if (!require(reshape2)) install.packages("reshape2")
+
+# Load libraries
+library(ggplot2)
+library(reshape2)
+
+# ============================================
+# 1. Load the Dataset
+# ============================================
+# Make sure the Titanic.csv file is in your working directory
+titanic_data <- read.csv("Titanic.csv")
+
+# ============================================
+# 2. Data Preprocessing
+# ============================================
+# Convert categorical variables to factors
+titanic_data$Pclass <- as.factor(titanic_data$Pclass)
+titanic_data$Sex <- as.factor(titanic_data$Sex)
+titanic_data$Survived <- as.factor(titanic_data$Survived)
+
+# ============================================
+# 3. Apply Value Ranges (Filtering)
+# ============================================
+# Limit Age from 1 to 100
+titanic_data <- subset(titanic_data, Age >= 1 & Age <= 100)
+
+# Limit Fare from 1 to 800
+titanic_data <- subset(titanic_data, Fare >= 1 & Fare <= 800)
+
+# ============================================
+# 4. Reshape Data for Plotting
+# ============================================
+# Reshape dataset into long format using melt()
+titanic_melted <- melt(titanic_data, id.vars = "Survived", 
+                       measure.vars = c("Pclass", "Sex", "Age", "SibSp", "PrCh", "Fare"))
+
+# ============================================
+# 5. Plot Independent Variables vs. Survived
+# ============================================
+# Facet plot to compare all independent variables in one figure
+ggplot(titanic_melted, aes(x = value, y = as.factor(Survived))) +
+  geom_jitter(alpha = 0.5, color = "green") +     # Scatter plot with jitter
+  facet_wrap(~ variable, scales = "free_x") +    # Separate plots for each variable
+  labs(title = "Independent Variables vs. Survived (with Value Ranges)", 
+       x = "Independent Variables", 
+       y = "Survived") +
+  theme_minimal()
+
+# ============================================
+# 6. Save Plot (Optional)
+# ============================================
+# Save the plot as an image file
+ggsave("Titanic_Plot_Range.png", width = 10, height = 6)
+
+# ============================================
+# END OF SCRIPT
+# ============================================
