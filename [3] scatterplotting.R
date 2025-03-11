@@ -68,7 +68,3 @@ print(plot)
 # Save the plot as a PNG image in the working directory
 ggsave("Titanic_Combined_ScatterPlot_Range_Age1-80_Fare1-600.png", 
        plot = plot, width = 12, height = 8, dpi = 300)
-
-# ============================================
-# END OF SCRIPT
-# ============================================

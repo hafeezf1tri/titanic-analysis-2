@@ -1,4 +1,4 @@
-# 📌 Step 1: Install Required Packages (if not already installed)
+
 packages <- c("ggplot2", "dplyr")
 new_packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new_packages)) install.packages(new_packages)
