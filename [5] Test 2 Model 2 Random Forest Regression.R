@@ -36,11 +36,11 @@ validation_data <- temp_data[-testIndex, ]
 
 # 📌 Step 4: Train a Random Forest Regression Model
 set.seed(42)  # Ensure reproducibility
-rf_model <- randomForest(Survived ~ ., data = train_data, ntree = 500, importance = TRUE)
+rf_titanic_model <- randomForest(Survived ~ ., data = train_data, ntree = 500, importance = TRUE)
 
 # 📌 Step 5: Evaluate Model Performance
 # Predict on test set
-rf_preds <- predict(rf_model, newdata = test_data)
+rf_preds <- predict(rf_titanic_model, newdata = test_data)
 
 # Convert continuous predictions to binary (0 or 1) for classification-like evaluation
 rf_class_preds <- ifelse(rf_preds > 0.5, 1, 0)
@@ -57,7 +57,7 @@ print(paste("R-squared:", r2))
 
 # 📌 Step 6: Validate the Model
 # Predict on validation set
-val_preds <- predict(rf_model, newdata = validation_data)
+val_preds <- predict(rf_titanic_model, newdata = validation_data)
 
 # Convert to binary for evaluation
 val_class_preds <- ifelse(val_preds > 0.5, 1, 0)
@@ -66,19 +66,20 @@ val_class_preds <- ifelse(val_preds > 0.5, 1, 0)
 val_acc <- mean(val_class_preds == validation_data$Survived)
 print(paste("Validation Accuracy:", val_acc))
 
-# 📌 Step 7: Feature Importance
+#Step 7: Feature Importance
 # Show which features contribute the most to predictions
-importance(rf_model)
-# Extract feature importance and convert to a dataframe
-feature_importance <- as.data.frame(importance(rf_model))
-feature_importance$Feature <- rownames(feature_importance)  # Add feature names
-feature_importance <- feature_importance[order(-feature_importance$MeanDecreaseGini), ]  # Sort by importance
+importance(rf_titanic_model)
+#varImpPlot(rf_titanic_model)  # Plot feature importance
+# Convert variable importance to a dataframe
+feature_importance <- as.data.frame(importance(rf_titanic_model))
+feature_importance$Feature <- rownames(feature_importance)
 
-# Plot feature importance using a horizontal bar graph
-ggplot(feature_importance, aes(x = reorder(Feature, MeanDecreaseGini), y = MeanDecreaseGini)) +
+# Plot using ggplot2 (bar graph)
+ggplot(feature_importance, aes(x = reorder(Feature, `%IncMSE`), y = `%IncMSE`)) +
   geom_bar(stat = "identity", fill = "steelblue") +
-  coord_flip() +  # Flip axes for readability
+  coord_flip() +
   theme_minimal() +
   labs(title = "Feature Importance in Random Forest Model",
        x = "Features",
-       y = "Importance (Mean Decrease in Gini)")
+       y = "Mean Decrease in Accuracy")
+
